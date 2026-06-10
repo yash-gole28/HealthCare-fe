@@ -2,6 +2,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import type { PermissionType } from "./permissions.type";
+import { getUserData } from "../utils/storage";
 
 type RouteMiddlewareProps = {
   children: React.ReactNode;
@@ -36,18 +37,17 @@ const RouteMiddleware = ({
     );
   }
 
-  const user =
-    JSON.parse(userData);
+  const user = getUserData();
 
   /*
     Super Admin Bypass
   */
 
-  if (
-    user.is_super_admin
-  ) {
-    return children;
-  }
+  // if (
+  //   user.is_super_admin
+  // ) {
+  //   return children;
+  // }
 
   /*
     If No Permission Needed

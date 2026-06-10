@@ -12,16 +12,22 @@ const useDashboard = () => {
 
   const [profile, setProfile] =
     useState<any>(null);
-  const [
-    latestReport,
-    setLatestReport,
-  ] = useState<any>(null);
+
+  const [latestReport, setLatestReport] =
+    useState<any>(null);
 
   const [reports, setReports] =
     useState<any[]>([]);
 
+  const [page, setPage] =
+    useState(1);
+
+  const [pagination, setPagination] =
+    useState<any>(null);
+
   const fetchDashboard =
     async () => {
+
       try {
 
         setLoading(true);
@@ -29,25 +35,17 @@ const useDashboard = () => {
         const [
           profileRes,
           latestRes,
-          historyRes,
         ] = await Promise.all([
           getProfileApi(),
           getLatestReportApi(),
-          getReportHistoryApi(),
         ]);
-        console.log("profile", profileRes.data)
-        console.log("latest", latestRes.data)
-        console.log("history", historyRes)
+
         setProfile(
           profileRes.data
         );
 
         setLatestReport(
           latestRes.data
-        );
-
-        setReports(
-          historyRes.data
         );
 
       } catch (error) {
@@ -61,17 +59,56 @@ const useDashboard = () => {
       }
     };
 
+  const fetchReportHistory =
+    async (
+      pageNumber = 1
+    ) => {
+
+      try {
+
+        const response =
+          await getReportHistoryApi(
+            pageNumber,
+            10
+          );
+
+        setReports(
+          response.data
+        );
+
+        setPagination(
+          response.pagination
+        );
+
+      } catch (error) {
+
+        console.log(error);
+
+      }
+    };
+
   useEffect(() => {
-    console.log("entered effect")
+
     fetchDashboard();
 
   }, []);
+
+  useEffect(() => {
+
+    fetchReportHistory(page);
+
+  }, [page]);
 
   return {
     loading,
     profile,
     latestReport,
     reports,
+
+    page,
+    setPage,
+
+    pagination,
   };
 };
 

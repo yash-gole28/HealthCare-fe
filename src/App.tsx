@@ -9,7 +9,10 @@ from "./routes/public.routes";
 
 import privateRoutes
 from "./routes/private.routes";
-import RouteMiddleware from "./routes/routes.middleware";
+
+import RouteMiddleware
+from "./routes/routes.middleware";
+import AppLayout from "./layouts/AppLayout";
 
 function App() {
 
@@ -23,17 +26,17 @@ function App() {
 
         {publicRoutes.map(
           (route) => (
+
             <Route
               key={route.path}
 
-              path={
-                route.path
-              }
+              path={route.path}
 
               element={
                 route.element
               }
             />
+
           )
         )}
 
@@ -41,34 +44,66 @@ function App() {
 
         {privateRoutes.map(
           (route) => (
+
             <Route
               key={route.path}
 
-              path={
-                route.path
-              }
+              path={route.path}
 
               element={
-              <RouteMiddleware
-  module={route.module}
-  permissions={route.permissions}
->
-  {route.element}
-</RouteMiddleware>
+
+                <RouteMiddleware
+                  module={route.module}
+                  permissions={route.permissions}
+                >
+
+                  <AppLayout>
+
+                    {route.element}
+
+                  </AppLayout>
+
+                </RouteMiddleware>
+
               }
             />
+
           )
         )}
 
-        {/* 404 */}
+        {/* Access Denied */}
+
+        <Route
+          path="/access-denied"
+
+          element={
+
+            <div className="min-h-screen flex items-center justify-center">
+
+              <h1 className="text-2xl font-semibold">
+                Access Denied
+              </h1>
+
+            </div>
+
+          }
+        />
+
+        {/* Not Found */}
 
         <Route
           path="*"
 
           element={
-            <div>
-              Not Found
+
+            <div className="min-h-screen flex items-center justify-center">
+
+              <h1 className="text-2xl font-semibold">
+                Page Not Found
+              </h1>
+
             </div>
+
           }
         />
 

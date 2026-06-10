@@ -18,9 +18,12 @@ export const getLatestReportApi =
   };
 
 export const getReportHistoryApi =
-  async () => {
+  (
+    page = 1,
+    limit = 10
+  ) => {
 
     return GET(
-      "/client/report-history"
+      `/client/report-history?page=${page}&limit=${limit}`
     );
   };

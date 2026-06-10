@@ -12,12 +12,17 @@ from "../components/ReportHistoryTable";
 
 const DashboardPage = () => {
 
-  const {
-    loading,
-    profile,
-    latestReport,
-    reports,
-  } = useDashboard();
+ const {
+  loading,
+  profile,
+  latestReport,
+  reports,
+
+  page,
+  setPage,
+
+  pagination,
+} = useDashboard();
 
   if (loading) {
 
@@ -68,8 +73,11 @@ const DashboardPage = () => {
         />
 
         <ReportHistoryTable
-          reports={reports}
-        />
+  reports={reports}
+  page={page}
+  setPage={setPage}
+  pagination={pagination}
+/>
 
       </div>
 

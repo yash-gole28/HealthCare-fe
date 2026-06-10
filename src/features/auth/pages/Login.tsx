@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useLogin } from '../../auth/hooks/useLogin';
 import { useNavigate } from 'react-router-dom';
+import { encryptData } from '../../../utils/crypto';
 
 const Login = () => {
 
@@ -28,18 +29,31 @@ const Login = () => {
             loginType,
             formData
           );
-          if(response.success){
-            if(loginType === "client"){
-              localStorage.setItem("user_data",JSON.stringify(response.data.client))
-              navigate("/dashboard")
-            }
-            if(loginType === "user"){
-              localStorage.setItem("user_data",JSON.stringify(response.data.user))
-            }
-            localStorage.setItem("access_token",JSON.stringify(response.data.accessToken))
-            localStorage.setItem("refresh_token",JSON.stringify(response.data.refreshToken))
-            setFormData({email:"",password:""})
+        if (response.success) {
+          if (loginType === "client") {
+            console.log("client data", response.data.client)
+            localStorage.setItem(
+              "user_data",
+              encryptData(
+                response.data.client
+              )
+            );
+            navigate("/dashboard")
           }
+          if (loginType === "user") {
+            console.log("user data", response.data.user)
+            localStorage.setItem(
+              "user_data",
+               encryptData(
+                response.data.user
+              )
+            );
+            navigate("/user-dashboard")
+          }
+          localStorage.setItem("access_token", JSON.stringify(response.data.accessToken))
+          localStorage.setItem("refresh_token", JSON.stringify(response.data.refreshToken))
+          setFormData({ email: "", password: "" })
+        }
 
       } catch (error) {
 
@@ -82,13 +96,12 @@ const Login = () => {
             className={`
               flex-1 py-2 rounded-md text-sm font-medium transition-all
 
-              ${
-                loginType ===
+              ${loginType ===
                 "user"
 
-                  ? "bg-white shadow text-slate-900"
+                ? "bg-white shadow text-slate-900"
 
-                  : "text-slate-500"
+                : "text-slate-500"
               }
             `}
           >
@@ -105,13 +118,12 @@ const Login = () => {
             className={`
               flex-1 py-2 rounded-md text-sm font-medium transition-all
 
-              ${
-                loginType ===
+              ${loginType ===
                 "client"
 
-                  ? "bg-white shadow text-slate-900"
+                ? "bg-white shadow text-slate-900"
 
-                  : "text-slate-500"
+                : "text-slate-500"
               }
             `}
           >
@@ -214,7 +226,7 @@ const Login = () => {
           >
             Login as {
               loginType ===
-              "user"
+                "user"
 
                 ? "Portal User"
 
