@@ -1,38 +1,80 @@
-import { useEffect } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 
-import "./App.css";
-import "./index.css";
-import { GET } from "./services/methods";
+import publicRoutes
+from "./routes/public.routes";
 
+import privateRoutes
+from "./routes/private.routes";
+import RouteMiddleware from "./routes/routes.middleware";
 
 function App() {
 
-  const getData = async () => {
-    try {
-
-      const response = await GET(
-        "/test"
-      );
-
-      console.log("API Response:", response);
-
-    } catch (error) {
-
-      console.log("API Error:", error);
-
-    }
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
-
   return (
-    <>
-      <h1 className="text-slate-400">
-        Hello there
-      </h1>
-    </>
+
+    <BrowserRouter>
+
+      <Routes>
+
+        {/* Public Routes */}
+
+        {publicRoutes.map(
+          (route) => (
+            <Route
+              key={route.path}
+
+              path={
+                route.path
+              }
+
+              element={
+                route.element
+              }
+            />
+          )
+        )}
+
+        {/* Private Routes */}
+
+        {privateRoutes.map(
+          (route) => (
+            <Route
+              key={route.path}
+
+              path={
+                route.path
+              }
+
+              element={
+              <RouteMiddleware
+  module={route.module}
+  permissions={route.permissions}
+>
+  {route.element}
+</RouteMiddleware>
+              }
+            />
+          )
+        )}
+
+        {/* 404 */}
+
+        <Route
+          path="*"
+
+          element={
+            <div>
+              Not Found
+            </div>
+          }
+        />
+
+      </Routes>
+
+    </BrowserRouter>
   );
 }
 

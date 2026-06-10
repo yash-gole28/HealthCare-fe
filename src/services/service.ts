@@ -8,6 +8,7 @@ const api = axios.create({
 
   headers: {
     "Content-Type": "application/json",
+    "x-encrypted":"true",
   },
 });
 
@@ -37,10 +38,13 @@ api.interceptors.request.use(
   (config) => {
     const token =
       localStorage.getItem("access_token");
-
+    console.log(
+  "TOKEN",
+  token
+);
     if (token) {
       config.headers.Authorization =
-        `Bearer ${token}`;
+        `Bearer ${JSON.parse(token)}`;
     }
 
     /*
