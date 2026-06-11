@@ -9,9 +9,20 @@ from "../components/LatestReportCard";
 
 import ReportHistoryTable
 from "../components/ReportHistoryTable";
+import { getUserData } from "../../../utils/storage";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const DashboardPage = () => {
+  const userDetails = getUserData()
+  const navigate = useNavigate()
+  console.log("client dashboard", userDetails)
 
+  useEffect(() => {
+    if(userDetails.type !== "client"){
+      navigate("/access-denied")
+    }
+  },[])
  const {
   loading,
   profile,

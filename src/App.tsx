@@ -2,16 +2,17 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  Navigate,
 } from "react-router-dom";
 
 import publicRoutes
-from "./routes/public.routes";
+  from "./routes/public.routes";
 
 import privateRoutes
-from "./routes/private.routes";
+  from "./routes/private.routes";
 
 import RouteMiddleware
-from "./routes/routes.middleware";
+  from "./routes/routes.middleware";
 import AppLayout from "./layouts/AppLayout";
 
 function App() {
@@ -23,6 +24,17 @@ function App() {
       <Routes>
 
         {/* Public Routes */}
+        <Route
+          path="/"
+          element={
+            (
+              <Navigate
+                to="/login"
+                replace
+              />
+            )
+          }
+        />
 
         {publicRoutes.map(
           (route) => (

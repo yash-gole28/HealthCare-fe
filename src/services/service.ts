@@ -51,11 +51,22 @@ api.interceptors.request.use(
       Encrypt Request Data
     */
 
-    if (config.data) {
-      config.data = {
-        payload: encryptData(config.data),
-      };
-    }
+    // if (config.data) {
+    //   config.data = {
+    //     payload: encryptData(config.data),
+    //   };
+    // }
+    if (
+  config.data &&
+  !(config.data instanceof FormData)
+) {
+  config.data = {
+    payload:
+      encryptData(
+        config.data
+      ),
+  };
+}
 
     return config;
   },

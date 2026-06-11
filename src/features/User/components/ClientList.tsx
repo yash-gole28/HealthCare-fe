@@ -1,4 +1,6 @@
 
+import { useEffect } from "react";
+import { getUserData } from "../../../utils/storage";
 import ClientFilters
 from "../components/ClientFilters";
 
@@ -6,10 +8,13 @@ import ClientTable
 from "../components/ClientTable";
 import useClients from "../hooks/useClient";
 import Pagination from "./Pagination";
+import { useNavigate } from "react-router-dom";
 
 
 const ClientList = () => {
-
+  const userDetails = getUserData()
+  const navigate = useNavigate()
+  console.log("userDetails in list", userDetails)
   const {
 
     clients,
@@ -32,6 +37,11 @@ const ClientList = () => {
 
   } = useClients();
 
+  useEffect(() => {
+    if(userDetails.type !== "user"){
+      navigate("/access-denied")
+    }
+  },[])
   return (
 
     <div>

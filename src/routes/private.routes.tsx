@@ -1,3 +1,4 @@
+import ClientDetails from "../features/User/pages/ClientDetails";
 import UserDashboard from "../features/User/pages/UserDashboard";
 import ClientDashboard from "../pages/ClientDashboard";
 import type { PermissionType } from "./permissions.type";
@@ -32,6 +33,18 @@ const privateRoutes: PrivateRouteType[] = [
 
     element: (
       <UserDashboard/>
+    ),
+
+    module: "dashboard",
+
+    // permissions: ["view"],
+  },
+  {
+    path:
+      "/clients/details",
+
+    element: (
+      <ClientDetails/>
     ),
 
     module: "dashboard",
