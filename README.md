@@ -1,73 +1,157 @@
-# React + TypeScript + Vite
+# Healthcare Portal Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This is the frontend application for the Healthcare Portal built using React, TypeScript, Vite, and Tailwind CSS.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Client Portal
 
-## Expanding the ESLint configuration
+* Login
+* Dashboard
+* View Profile
+* Latest Health Report
+* Report History
+* Pagination
+* Protected Routes
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Admin Portal
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* Login
+* Search Clients
+* Filter Clients
+* View Client Details
+* Upload Health Report CSV
+* Role-Based Access Control (RBAC)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Tech Stack
+
+* React
+* TypeScript
+* Vite
+* React Router
+* Axios
+* Tailwind CSS
+
+---
+
+## Installation
+
+### Clone Repository
+
+```bash
+git clone <repository-url>
+cd HealthCare-fe
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### Install Dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+### Create Environment File
+
+Create a `.env` file in the project root.
+
+```env
+VITE_API_BASE_URL=http://localhost:5000/api
+
+VITE_SECRET_KEY=<your-encryption-secret>
+```
+
+### Run Development Server
+
+```bash
+npm run dev
+```
+
+### Build Project
+
+```bash
+npm run build
+```
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+---
+
+## Authentication
+
+The application supports:
+
+### Admin/User Login
+
+Use the credentials provided in the submission email.
+
+### Client Login
+
+Use any client email from the imported dataset.
+
+Default Password:
+
+```txt
+Test@123
+```
+
+---
+
+## Route Protection
+
+Protected routes are implemented using:
+
+* JWT Authentication
+* Role-Based Access Control (RBAC)
+* Route Middleware
+
+Users can only access pages permitted for their role.
+
+---
+
+## Project Structure
+
+```txt
+src/
+
+features/
+components/
+layouts/
+routes/
+services/
+utils/
+
+App.tsx
+main.tsx
+```
+
+---
+
+## Build for Production
+
+```bash
+npm run build
+```
+
+The generated build will be available in:
+
+```txt
+dist/
+```
+
+---
+
+## Deployment
+
+Frontend can be deployed using:
+
+* Vercel
+* Netlify
