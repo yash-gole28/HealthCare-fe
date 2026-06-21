@@ -1,5 +1,6 @@
 import axios from "axios";
 import { decryptData, encryptData } from "../utils/crypto";
+import toast from "react-hot-toast";
 
 
 const api = axios.create({
@@ -8,7 +9,7 @@ const api = axios.create({
 
   headers: {
     "Content-Type": "application/json",
-    "x-encrypted":"true",
+    "x-encrypted": "true",
   },
 });
 
@@ -39,9 +40,9 @@ api.interceptors.request.use(
     const token =
       localStorage.getItem("access_token");
     console.log(
-  "TOKEN",
-  token
-);
+      "TOKEN",
+      token
+    );
     if (token) {
       config.headers.Authorization =
         `Bearer ${JSON.parse(token)}`;
@@ -57,16 +58,16 @@ api.interceptors.request.use(
     //   };
     // }
     if (
-  config.data &&
-  !(config.data instanceof FormData)
-) {
-  config.data = {
-    payload:
-      encryptData(
-        config.data
-      ),
-  };
-}
+      config.data &&
+      !(config.data instanceof FormData)
+    ) {
+      config.data = {
+        payload:
+          encryptData(
+            config.data
+          ),
+      };
+    }
 
     return config;
   },
@@ -86,7 +87,7 @@ api.interceptors.response.use(
         response.data.payload
       );
     }
-
+    console.log("response", response)
     return response;
   },
 
@@ -167,7 +168,13 @@ api.interceptors.response.use(
 
       }
     }
-
+    if (
+      error.response?.data?.message &&
+      !originalRequest?.suppressToast
+    ) {
+      toast.error(error.response.data.message);
+    }
+    console.log("error", error.response.data.message)
     return Promise.reject(error);
   }
 );
