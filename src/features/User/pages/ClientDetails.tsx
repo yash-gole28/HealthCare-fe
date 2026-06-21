@@ -137,39 +137,6 @@ const ClientDetails = () => {
         }}  
       />
 
-      {/* <div
-        className="
-          bg-white
-          rounded-2xl
-          shadow
-          p-6
-        "
-      >
-
-        <h2
-          className="
-            text-xl
-            font-semibold
-            mb-4
-          "
-        >
-          Upload Health Report
-        </h2>
-
-        <button
-          className="
-            px-4
-            py-2
-            bg-slate-900
-            text-white
-            rounded-lg
-          "
-        >
-          Upload CSV
-        </button>
-
-      </div> */}
-
     </div>
 
   );

@@ -1,4 +1,5 @@
 import {
+  useRef,
   useState,
 } from "react";
 
@@ -21,6 +22,8 @@ const UploadReport = ({
       null
     );
 
+  const fileInputRef =
+  useRef<HTMLInputElement>(null);
   const [error, setError] =
     useState("");
 
@@ -70,7 +73,10 @@ const UploadReport = ({
       ) {
 
         setFile(null);
-
+        setError("")
+         if (fileInputRef.current) {
+    fileInputRef.current.value = "";
+  }
         onSuccess?.();
 
         alert(
@@ -138,8 +144,8 @@ const UploadReport = ({
 
         <input
           type="file"
+          ref={fileInputRef}
           accept=".csv"
-
           onChange={(e) =>
             setFile(
               e.target.files?.[0] ||
